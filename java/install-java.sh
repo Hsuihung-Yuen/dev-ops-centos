@@ -20,7 +20,7 @@ cp "$JDK_SRC" "$JDK_DST"
 cd "$JDK_DST"
 
 # 解压JDK压缩包
-tar -zxvf "jdk-8*.tar.gz"
+tar -zxvf "jdk-8u202-linux-x64.tar.gz"
 
 # 获取解压后的JDK目录名称
 JDK_DIR=$(tar -tzf "jdk-8u202-linux-x64.tar.gz" | head -1 | cut -f1 -d"/")

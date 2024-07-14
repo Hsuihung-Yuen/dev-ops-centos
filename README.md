@@ -1,6 +1,6 @@
 # 服务器环境工具包（centos）
 ## /java
-自行下载JDK8*.tar.gz包，并放在./java/目录下，推荐JDK版本为1.8.0_202，执行命令：
+JDK版本为1.8.0_202，所需其他版本需自行下载并修改 install-java.sh，执行命令：
 ```shell
 cd java
 

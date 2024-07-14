@@ -39,5 +39,3 @@ build/
 /data/
 /.idea/
 
-### 大文件 ###
-/**/*.tar.gz
