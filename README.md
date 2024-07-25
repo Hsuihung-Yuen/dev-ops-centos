@@ -1,6 +1,6 @@
-# 服务器环境工具包（centos）
+# 服务器环境安装包（CentOS7）
 ## /java
-JDK版本为1.8.0_202，所需其他版本需自行下载并修改 install-java.sh，执行命令：
+JDK版本为1.8.0_202，执行命令：
 ```shell
 cd java
 
@@ -46,9 +46,6 @@ sudo yum remove docker  docker-common docker-selinux docker-engine
 # 安装依赖包
 sudo yum install -y yum-utils device-mapper-persistent-data lvm2
 
-# 设置阿里源
-sudo yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
-
 # 查看docker版本
 yum list docker-ce --showduplicates | sort -r
 
@@ -66,5 +63,55 @@ sudo chmod +x /usr/local/bin/docker-compose
 # 查看是否成功安装
 docker-compose -v
 ```
+### 配置docker 镜像
+阿里云提供了镜像源：[https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors(opens new window)](https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors)- 登录后会获得一个专属的地址
+创建daemon.json并设置镜像：
+```shell
+sudo mkdir -p /etc/docker
+sudo tee /etc/docker/daemon.json <<-'EOF'
+{
+  "registry-mirrors": ["https://xxxxxxx.mirror.aliyuncs.com"]
+}
+EOF
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+```
+其他可选配置
+```shell
+{ "registry-mirrors" : [
+    "https://xxxxx.mirror.aliyuncs.com",
+    "http://docker.mirrors.ustc.edu.cn",
+    "http://hub-mirror.c.163.com"
+  ],
+  "builder": {
+    "gc": {
+      "enabled": true,
+      "defaultKeepStorage": "20GB"
+    }
+  },
+  "experimental": false,
+  "features": {
+    "buildkit": true
+  }
+}
 
+```
+一些备选镜像：
+```shell
+sudo mkdir -p /etc/docker
+sudo tee /etc/docker/daemon.json <<-'EOF'
+{
+    "registry-mirrors": [
+        "https://dc.j8.work",
+        "https://docker.m.daocloud.io",
+        "https://dockerproxy.com",
+        "https://docker.mirrors.ustc.edu.cn",
+        "https://docker.nju.edu.cn"
+    ]
+}
+EOF
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+
+```
 
